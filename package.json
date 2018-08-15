@@ -1,0 +1,22 @@
+{
+  "name": "riva",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest /tests",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://wendellwhite@bitbucket.org/wendellwhite/riva.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/wendellwhite/riva#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "jest": "^23.4.1",
+    "redis": "^2.8.0"
+  }
+}
