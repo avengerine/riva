@@ -8,9 +8,9 @@ services:
     ports:
       - 3000:3000
     environment:
-      - NODE_ENV=dev
-      - PORT=3000
-      - REDIS_URL=redis://cache
+      - NODE_ENV=default
+      - APP_PORT=3000
+      - REDIS_HOST=redis://cache
     links:
       - redis
 

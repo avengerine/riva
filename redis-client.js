@@ -1,6 +1,7 @@
+const config = require('./riva-config');
 const redis = require('redis');
 const {promisify} = require('util');
-const client = redis.createClient(process.env.REDIS_URL);
+const client = redis.createClient(config.redis.host);
 
 module.exports = {
   ...client,

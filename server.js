@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const redisClient = require('./redis-client')
+const config = require('./riva-config')
 
 
 app.get('/', function (req, res) {
@@ -20,8 +21,7 @@ app.post('/riva/:key', async (req, res) => {
     return res.send('Stored!');
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(config.app.port, () => {
 
-	console.log('Example app listening on port ${PORT}!');
+	console.log('Example app listening on port ' + config.app.port + '!');
 });
