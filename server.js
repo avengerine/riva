@@ -5,7 +5,7 @@ const config = require('./riva-config')
 
 
 app.get('/', function (req, res) {
-    res.send('Hello World!');
+    res.status(200).send('OK');
 });
 
 app.get('/riva/:key', async (req, res) => {
@@ -18,9 +18,9 @@ app.post('/riva/:key', async (req, res) => {
     const { key } = req.params;
     const value = req.query;
     await redisClient.setAsync(key, JSON.stringify(value));
-    return res.send('Stored!');
+    return res.status(201).send('Stored!');
 });
 
 app.listen(config.app.port, () => {
-    console.log('Example app listening on port ' + config.app.port + '!');
+    console.log('Listening on port ' + config.app.port);
 });
