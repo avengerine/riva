@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const di = require('./container.js');
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
     res.status(200).send('OK');
 });
 

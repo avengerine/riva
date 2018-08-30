@@ -1,7 +1,7 @@
 const redis = require('redis');
 const {promisify} = require('util');
 
-function init(config){
+module.exports = (config) => {
 	const client = redis.createClient(config.redis.host);
 	return {
 		...client,
@@ -9,6 +9,4 @@ function init(config){
 		setAsync: promisify(client.set).bind(client),
 		keysAsync: promisify(client.keys).bind(client)
 	};
-}
-
-module.exports = init;
+};
