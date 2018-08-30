@@ -15,6 +15,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/wendellwhite/riva#readme",
   "dependencies": {
+    "bottlejs": "^1.7.1",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "jest": "^23.4.1",
