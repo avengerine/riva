@@ -1,2 +1,7 @@
+.git
+.gitignore
+.cache
+*.md
 node_modules
 npm-debug.log
+test
