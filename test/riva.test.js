@@ -2,7 +2,7 @@ const request = require('supertest');
 const td = require('testdouble');
 
 const di = require('./container.setup');
-const redisClient = require('../redis-client');
+const redisClient = require('../app/redis-client');
 
 di.factory('redisClient', (container) => {
     let fakeRedis = td.object(['getAsync']);
@@ -10,7 +10,7 @@ di.factory('redisClient', (container) => {
     td.when(fakeRedis.getAsync('unknown')).thenReturn('null');
     return fakeRedis;
 });
-const app = require('../app')(di);
+const app = require('../app/app')(di);
 
 
 describe('Test the root path', () => {
