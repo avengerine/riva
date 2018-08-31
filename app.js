@@ -10,12 +10,14 @@ module.exports = (di) => {
     app.get('/riva/:key', async (req, res) => {
         const { key } = req.params;
         const rawData = await di.container.redisClient.getAsync(key);
+        console.log('Found ' + JSON.stringify(rawData, null, 2));
         return res.json(JSON.parse(rawData));
     });
 
     app.post('/riva/:key', async (req, res) => {
         const { key } = req.params;
         const value = req.query;
+        console.log('Value to store ' + JSON.stringify(value, null, 2));
         await di.container.redisClient.setAsync(key, JSON.stringify(value));
         return res.status(201).send('Stored!');
     });
