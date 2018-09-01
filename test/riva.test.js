@@ -2,13 +2,12 @@ const request = require('supertest');
 const td = require('testdouble');
 
 const di = require('./container.setup');
-const redisClient = require('../app/redis-client');
 
 di.factory('redisClient', (container) => {
     let fakeRedis = td.object(['getAsync', 'setAsync']);
     td.when(fakeRedis.getAsync('foundkey')).thenReturn('{"key": "value"}');
     td.when(fakeRedis.getAsync('unknown')).thenReturn('null');
-    td.when(fakeRedis.setAsync()).thenReturn(undefined);
+    td.when(fakeRedis.setAsync('storevalue', td.matchers.anything())).thenReturn('OK');
     return fakeRedis;
 });
 const app = require('../app/app')(di);
@@ -19,6 +18,7 @@ describe('Test the root path', () => {
         const response = await request(app).get('/');
         expect(response.statusCode).toBe(200);
         expect(response.text).toEqual("OK");
+        expect(response.body).toEqual({});
     });
 });
 
@@ -40,8 +40,16 @@ describe('Test key NOT found path', () => {
 
 describe('Test key value store path with success', () => {
     test('It should response POST with 201 status code', async () => {
-        const response = await request(app).post('/riva/store?name=value&status=ok');
+        const response = await request(app).post('/riva/storevalue?name=value');
         expect(response.statusCode).toBe(201);
         expect(response.text).toEqual("Stored!");
+    });
+});
+
+describe('Test key value store path with error', () => {
+    test('It should response POST with 500 status code', async () => {
+        const response = await request(app).post('/riva/error?wrong=value');
+        expect(response.statusCode).toBe(500);
+        expect(response.text).toEqual("Error!");
     });
 });

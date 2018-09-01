@@ -18,8 +18,11 @@ module.exports = (di) => {
         const { key } = req.params;
         const value = req.query;
         console.log('Value to store ' + JSON.stringify(value, null, 2));
-        await di.container.redisClient.setAsync(key, JSON.stringify(value));
-        return res.status(201).send('Stored!');
+        let result = await di.container.redisClient.setAsync(key, JSON.stringify(value));
+        if (result == 'OK')
+            return res.status(201).send('Stored!');
+        else
+            return res.status(500).send('Error!');
     });
 
     return app;
