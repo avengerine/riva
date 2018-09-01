@@ -4,10 +4,12 @@ const td = require('testdouble');
 const di = require('./container.setup');
 
 di.factory('redisClient', (container) => {
-    let fakeRedis = td.object(['getAsync', 'setAsync']);
+    let fakeRedis = td.object(['getAsync', 'setAsync', 'keysAsync']);
     td.when(fakeRedis.getAsync('foundkey')).thenReturn('{"key": "value"}');
     td.when(fakeRedis.getAsync('unknown')).thenReturn('null');
     td.when(fakeRedis.setAsync('storevalue', td.matchers.anything())).thenReturn('OK');
+    td.when(fakeRedis.keysAsync('foundkey')).thenReturn(['foundkey']);
+    td.when(fakeRedis.keysAsync('unknown')).thenReturn([]);
     return fakeRedis;
 });
 const app = require('../app/app')(di);
@@ -33,8 +35,8 @@ describe('Test key found path', () => {
 describe('Test key NOT found path', () => {
     test('It should response the GET method', async () => {
         const response = await request(app).get('/riva/unknown');
-        expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual(null);
+        expect(response.statusCode).toBe(404);
+        expect(response.text).toEqual('Not found');
     });
 });
 

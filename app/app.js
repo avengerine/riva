@@ -9,6 +9,9 @@ module.exports = (di) => {
 
     app.get('/riva/:key', async (req, res) => {
         const { key } = req.params;
+        const found = await di.container.redisClient.keysAsync(key);
+        if (!found.length)
+            return res.status(404).send('Not found');
         const rawData = await di.container.redisClient.getAsync(key);
         console.log('Found ' + JSON.stringify(rawData, null, 2));
         return res.json(JSON.parse(rawData));
