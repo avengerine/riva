@@ -24,8 +24,7 @@ module.exports = (di) => {
         let result = await di.container.redisClient.setAsync(key, JSON.stringify(value));
         if (result == 'OK')
             return res.status(201).send('Stored!');
-        else
-            return res.status(500).send('Error!');
+        return res.status(500).send('Error!');
     });
 
     return app;
