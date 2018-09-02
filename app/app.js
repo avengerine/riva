@@ -3,7 +3,7 @@ const app = express();
 
 
 module.exports = (di) => {
-    const rivaCtrl = require('./controller/riva')(di);
+    const rivaCtrl = require('./controllers/riva')(di);
 
     app.get('/', rivaCtrl.healthcheck);
     app.get('/riva/:key', rivaCtrl.getKey);
