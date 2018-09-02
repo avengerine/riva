@@ -1,10 +1,10 @@
 module.exports = (di) => {
     
-    var healthcheck = (req, res) => {
+    let healthcheck = (req, res) => {
         res.status(200).send('OK');
     };
 
-    var getKey = async (req, res) => {
+    let getKey = async (req, res) => {
         const { key } = req.params;
         const found = await di.container.redisClient.keysAsync(key);
         if (!found.length)
@@ -14,7 +14,7 @@ module.exports = (di) => {
         return res.json(JSON.parse(rawData));
     };
     
-    var setKey = async (req, res) => {
+    let setKey = async (req, res) => {
         const { key } = req.params;
         const value = req.query;
         console.log('Value to store ' + JSON.stringify(value, null, 2));
