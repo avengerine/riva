@@ -1,6 +1,6 @@
 module.exports = (di) => {
     
-    let healthcheck = (req, res) => {
+    let healthCheck = (req, res) => {
         res.status(200).send('OK');
     };
 
@@ -25,7 +25,7 @@ module.exports = (di) => {
     };
 
     return {
-        healthcheck: healthcheck,
+        healthCheck: healthCheck,
         getKey: getKey,
         setKey: setKey
     };
