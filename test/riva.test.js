@@ -15,6 +15,13 @@ di.factory('redisClient', (container) => {
 const app = require('../app/app')(di);
 
 
+describe('Test unknown path', () => {
+    test('It should not response the GET method', async () => {
+        const response = await request(app).get('/unknown');
+        expect(response.statusCode).toBe(404);
+    });
+});
+
 describe('Test the root path', () => {
     test('It should response the GET method', async () => {
         const response = await request(app).get('/');
