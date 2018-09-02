@@ -1,7 +1,6 @@
 const fs = require("fs");
 const env = process.env.NODE_ENV || 'default'; // 'dev' or 'test'
 
-
 function init () {
     const env_conf = JSON.parse(fs.readFileSync('./config/' + env + '.json').toString());
     
