@@ -8,7 +8,6 @@ di.service('config', config);
 di.factory('redisClient', (container) => {
     const conf = container.config;
 
-
     return new redisClient(conf);
 });
 
