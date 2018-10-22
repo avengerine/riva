@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-
 """ Main controller """
-from apistar import App, Route
+from sanic import Sanic
+from sanic.response import json
+
+import aiohttp
+
+app = Sanic(__name__)
 
 
-def welcome(name=None):
-    if name is None:
-        return {'message': 'Welcome to API Star!'}
-    return {'message': 'Welcome to API Star, %s!' % name}
-
-
-routes = [
-    Route('/', method='GET', handler=welcome),
-]
-
-app = App(routes=routes)
-
+@app.route('/')
+async def test(request):
+    return json({'hello': 'world'})
 
 if __name__ == '__main__':
-    app.serve('127.0.0.1', 5000, debug=True)
+    app.run(host='0.0.0.0', port=8000)
