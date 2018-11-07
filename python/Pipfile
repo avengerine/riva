@@ -4,8 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-asyncio = "*"
-uvloop = "*""
 aioredis = "*"
 sanic = "*"
 dependency_injector = "*"
