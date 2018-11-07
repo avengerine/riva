@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """ Main controller """
 import os
+import json
 import asyncio
 import uvloop
 import aioredis
@@ -8,7 +9,6 @@ import logging
 from datetime import datetime
 import sanic
 from sanic import Sanic, response
-from sanic.response import json
 import dependency_injector.containers as containers
 import dependency_injector.providers as providers
 
@@ -20,23 +20,24 @@ loop = asyncio.get_event_loop()
 
 @app.route("/")
 async def handle_root(request):
-    return response.json({"ptua": "zorra"})
+    return response.text("OK")
 
 
-@app.route("/test")
-async def handle(request):
+@app.route("/rivap/<key_id>", methods=['GET'])
+async def handle(request, key_id):
     with await request.app.redis_pool as redis:
-        await redis.execute('set', 'test-my-key', 'value')
-        val = await redis.execute('get', 'test-my-key')
-    return response.text(val.decode('utf-8'))
+        exists = await redis.execute('exists', key_id)
+        if exists:
+            val = await redis.execute('get', key_id)
+            return response.json(json.loads(val.decode('utf-8')), status=200)
+    return response.text("Not found", status=404)
 
 
-@app.route("/pong")
-async def handle(request):
+@app.route("/rivap/<key_id>", methods=['POST'])
+async def handle(request, key_id):
     with await request.app.redis_pool as redis:
-        await redis.execute('set', 'test-my-key', 'value')
-        val = await redis.execute('get', 'test-my-key')
-    return response.text(val.decode('utf-8'))
+        await redis.execute('set', key_id, json.dumps(request.json))
+    return response.text("Stored!", status=201)
 
 
 @app.listener('before_server_start')
