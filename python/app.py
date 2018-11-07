@@ -10,7 +10,7 @@ app = Sanic(__name__)
 
 
 @app.route("/")
-async def root_handler(request):
+def root_handler(request):
     return response.text("OK")
 
 
