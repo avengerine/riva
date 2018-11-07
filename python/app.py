@@ -1,30 +1,21 @@
 # -*- coding: utf-8 -*-
 """ Main controller """
-import os
 import json
-import asyncio
-import uvloop
 import aioredis
-import logging
-from datetime import datetime
-import sanic
 from sanic import Sanic, response
 import dependency_injector.containers as containers
 import dependency_injector.providers as providers
 
-
-asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 app = Sanic(__name__)
-loop = asyncio.get_event_loop()
 
 
 @app.route("/")
-async def handle_root(request):
+async def root_handler(request):
     return response.text("OK")
 
 
 @app.route("/rivap/<key_id>", methods=['GET'])
-async def handle(request, key_id):
+async def get_if_exists_handler(request, key_id):
     with await request.app.redis_pool as redis:
         exists = await redis.execute('exists', key_id)
         if exists:
@@ -34,7 +25,7 @@ async def handle(request, key_id):
 
 
 @app.route("/rivap/<key_id>", methods=['POST'])
-async def handle(request, key_id):
+async def set_handle(request, key_id):
     with await request.app.redis_pool as redis:
         await redis.execute('set', key_id, json.dumps(request.json))
     return response.text("Stored!", status=201)
