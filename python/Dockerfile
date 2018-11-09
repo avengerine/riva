@@ -1,9 +1,13 @@
 FROM python:3.6
 
-WORKDIR /app/
-COPY Pipfile /app/
+WORKDIR /var/www/app
+COPY Pipfile ./
 
-RUN pipenv install \
-    && pipenv shell
+RUN pip install pipenv
 
-ADD ./app/ /app/
+RUN pipenv install
+
+COPY . .
+
+EXPOSE 8000
+CMD ["pipenv", "run", "python", "app.py", "--no-interactive"]
