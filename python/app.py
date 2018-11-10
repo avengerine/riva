@@ -34,7 +34,7 @@ async def set_handle(request, key_id):
 @app.listener('before_server_start')
 async def before_server_start(app, loop):
     app.redis_pool = await aioredis.create_pool(
-        ('localhost', 6379),
+        ('pycache', 6379),
         minsize=1,
         maxsize=1,
         loop=loop
