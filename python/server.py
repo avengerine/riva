@@ -1,31 +1,10 @@
 # -*- coding: utf-8 -*-
 """ Main controller """
 import json
-import aioredis
 from sanic import Sanic, response
-from dependency_injector import containers, providers
+from app.container import Configs, Clients
 
 app = Sanic(__name__)
-
-
-class Configs(containers.DeclarativeContainer):
-    config = providers.Configuration('config')
-
-
-class RedisPool:
-    @classmethod
-    async def create(classmethod, loop):
-        return await aioredis.create_pool(
-            ('localhost', 6379),
-            minsize=1,
-            maxsize=1,
-            loop=loop
-        )
-
-
-class Clients(containers.DeclarativeContainer):
-    redis = providers.Factory(RedisPool)
-
 
 def root_handler(request):
     return response.text("OK")
@@ -56,7 +35,8 @@ async def before_server_start(app, loop):
     """
     listener for server start
     """
-    app.redis_pool = await RedisPool.create(loop)
+    redis_client = Clients.redis()
+    app.redis_pool = await redis_client.create(loop)
 
 
 async def after_server_stop(app, loop):
