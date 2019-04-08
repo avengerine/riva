@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "jest test/",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "./node_modules/.bin/eslint --ext .js ."
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,12 @@
     "redis": "^2.8.0"
   },
   "devDependencies": {
-    "eslint": "^5.12.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
     "jest": "^23.6.0",
     "superagent": "^3.8.3",
     "supertest": "^3.4.1",

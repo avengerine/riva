@@ -1,14 +1,14 @@
-const Bottle = require('bottlejs');
-const config = require('./riva-config');
-const redisClient = require('./clients/redis-client');
+const Bottle = require('bottlejs')
+const config = require('./riva-config')
+const RedisClient = require('./clients/redis-client')
 
-const di = new Bottle();
+const Di = new Bottle()
 
-di.service('config', config);
-di.factory('redisClient', (container) => {
-    const conf = container.config;
+Di.service('config', config)
+Di.factory('redisClient', (container) => {
+  const conf = container.config
 
-    return new redisClient(conf);
-});
+  return new RedisClient(conf)
+})
 
-module.exports = di;
+module.exports = Di

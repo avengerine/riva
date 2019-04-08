@@ -1,13 +1,13 @@
-const express = require('express');
-const app = express();
-const rivaCtrlInit = require('./controllers/riva');
+const express = require('express')
+const app = express()
+const rivaCtrlInit = require('./controllers/riva')
 
 module.exports = (di) => {
-    const rivaCtrl = rivaCtrlInit(di);
+  const rivaCtrl = rivaCtrlInit(di)
 
-    app.get('/', rivaCtrl.healthCheck);
-    app.get('/riva/:key', rivaCtrl.getKey);
-    app.post('/riva/:key', rivaCtrl.setKey);
+  app.get('/', rivaCtrl.healthCheck)
+  app.get('/riva/:key', rivaCtrl.getKey)
+  app.post('/riva/:key', rivaCtrl.setKey)
 
-    return app;
-};
+  return app
+}
