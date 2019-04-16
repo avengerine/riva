@@ -12,9 +12,9 @@ Di.factory('redisClient', (container) => {
   return new RedisClient(redisConf)
 })
 Di.factory('logger', (container) => {
-	const logConf = container.config.log
+  const logConf = container.config.log
 
-	return Logger(logConf)
+  return Logger(logConf)
 })
 
 module.exports = Di
