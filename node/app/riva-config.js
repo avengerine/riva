@@ -11,6 +11,10 @@ function init () {
     'redis': {
       'host': process.env.REDIS_HOST || envConf.redis.host,
       'port': parseInt(process.env.REDIS_PORT) || envConf.redis.port
+    },
+    "log": {
+      "path": process.env.APP_LOG_PATH || envConf.log.path,
+      "level": process.env.APP_LOG_LEVEL || envConf.log.level
     }
   }
 }
