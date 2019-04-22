@@ -5,12 +5,19 @@ services:
     volumes:
       - ./:/var/www/app
     ports:
-      - 3000:3000
+      - 3000
     environment:
       - NODE_ENV=container
     links:
       - redis
-
+  lb:
+    image: dockercloud/haproxy
+    links:
+     - app
+    ports:
+     - '80:80'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   redis:
     image: redis
     container_name: cache
