@@ -1,17 +1,27 @@
 const request = require('supertest')
 const td = require('testdouble')
 
-const di = require('./container.setup')
+const di = require('../app/container')
 
-di.factory('redisClient', (container) => {
+di.decorator('redisClient', function (redisClient) {
   let fakeRedis = td.object(['getAsync', 'setAsync', 'keysAsync'])
   td.when(fakeRedis.getAsync('foundkey')).thenReturn('{"key": "value"}')
   td.when(fakeRedis.getAsync('unknown')).thenReturn('null')
   td.when(fakeRedis.setAsync('storevalue', td.matchers.anything())).thenReturn('OK')
   td.when(fakeRedis.keysAsync('foundkey')).thenReturn(['foundkey'])
   td.when(fakeRedis.keysAsync('unknown')).thenReturn([])
-  return fakeRedis
+
+  redisClient = (function () {
+    return {
+      instance: function () {
+        return fakeRedis
+      }
+    }
+  })()
+
+  return redisClient
 })
+
 const app = require('../app/app')(di)
 
 describe('Test unknown path', () => {

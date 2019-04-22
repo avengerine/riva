@@ -1,8 +1,9 @@
 module.exports = (di) => {
   let logger = di.container.logger
-  let redisClient = di.container.redisClient
+  let redisClient = di.container.redisClient.instance()
 
   let healthCheck = (req, res) => {
+    logger.info('Healthcheck OK')
     res.status(200).send('OK')
   }
 

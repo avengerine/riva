@@ -6,15 +6,11 @@ const Logger = require('./logger')
 const Di = new Bottle()
 
 Di.service('config', config)
-Di.factory('redisClient', (container) => {
-  const redisConf = container.config.redis
-
-  return new RedisClient(redisConf)
-})
 Di.factory('logger', (container) => {
-  const logConf = container.config.log
-
-  return Logger(logConf)
+  return Logger(container.config.log)
+})
+Di.instanceFactory('redisClient', (container) => {
+  return new RedisClient(container.config.redis)
 })
 
 module.exports = Di
