@@ -1,6 +1,6 @@
-const Bottle = require('bottlejs')
-const config = require('./riva-config')
 const RedisClient = require('./clients/redis-client')
+const config = require('./riva-config')
+const Bottle = require('bottlejs')
 const Logger = require('./logger')
 
 const Di = new Bottle()

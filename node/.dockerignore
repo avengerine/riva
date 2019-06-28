@@ -1,7 +1,15 @@
+.DS_Store
 .git
 .gitignore
 .cache
+
+Dockerfile
+docker-compose*.yml
+
 *.md
 node_modules
-npm-debug.log
+*.log
 test
+*.dist
+
+
